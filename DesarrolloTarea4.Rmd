@@ -1,0 +1,61 @@
+---
+title: "TareaIR"
+author: "Veronica Valverde"
+date: "11/7/2020"
+output: html_document
+---
+
+Exploración de los datos
+
+```{r}
+wd<-setwd("C:/Users/verov/Documents/UCR/2020/IICiclo/Investigacion_Reproducible/Tarea4/TareaBiologiaIR2")
+getwd()
+
+dat<-read.csv("TareIR2/Datos_tarea4.csv", stringsAsFactors = T)
+
+head(dat)
+str(dat)
+dat$L<-as.factor(dat$L)
+levels(dat$L)
+
+hist(dat$D)
+
+
+plot(dat$H1, D)
+plot(dat$H2, D)
+plot(dat$H3, D)
+plot(dat$H4, D)
+plot(dat$H5, D)
+
+```
+
+## Trampa 1
+
+```{r}
+
+dat$D<-as.numeric(PP$D)
+#modelos lineales de cada indicador
+V.p <- NULL
+mod_H1 <- lm(dat$D ~ dat$H1)
+S1<-summary(mod_H1)
+V.p <- append(x = V.p, values = S1$coefficients[2, 4]) #valor de P
+mod_H2 <- lm(dat$D ~ dat$H2)
+S2<-summary(mod_H2)
+V.p <- append(x = V.p, values = S2$coefficients[2, 4])
+mod_H3 <- lm(dat$D ~ dat$H3)
+S3<-summary(mod_H3)
+V.p <- append(x = V.p, values = S3$coefficients[2, 4])
+mod_H4 <- lm(dat$D ~ dat$H4)
+S4<-summary(mod_H4)
+V.p <- append(x = V.p, values = S4$coefficients[2, 4])
+mod_H5 <- lm(dat$D ~ dat$H5)
+S5<-summary(mod_H5)
+V.p <- append(x = V.p, values = S5$coefficients[2, 4])
+
+V.p
+
+```
+En la trampa 1 hicimos una comparación múltiple, usando un modelo linear para relacionar los distintos indicadores de degradación de hábitat con la diversidad alélica. Según los reultados, todos los indicadores de degradación de hábitat (H) influyen en la diversidad alélica (D) de forma significativa.
+
+
+
