@@ -8,7 +8,7 @@ output: html_document
 Exploraci贸n de los datos
 
 ```{r}
-wd<-setwd("C:/Users/Karol-PC/Desktop/TareaBiologiaIR2")
+wd<-setwd("C:/Users/JC/Desktop/rep_tarea4/TareaBiologiaIR2")
 getwd()
 
 dat<-read.csv("TareIR2/Datos_tarea4.csv", stringsAsFactors = T)
@@ -85,26 +85,20 @@ plot(dat$D~ dat$H1, col="red") + points(datP$D~datP$H1, col="blue")
 En la trampa 2 se trabaj贸 como si solo se hubiera tomado una muestra (un ave por latitud), de esta manera disminuyendo el N total a solo 60 en vez de los 600 organismos analizados. Esto para corroborar si era posible tener significancia en nuestros datos a煤n con pocos organismos testados por regi贸n. Y efectivamente, se obtuvo que a煤n con un esfuerzo de muestreo menor, H: la degradaci贸n del ambiente tiene un efecto sobre la variaci贸n al茅lica. 
 
 
+## Trampa 3
 
 ```{r}
-#REPORTE SELECTIVO
 
-P1<-lm (D ~ L, data=dat )
-P1
-summary(P1)
+# por a駉s
 
-dat$L <- as.numeric(dat$L)
-
-
-P2<-cor(dat$L,dat$D)
-summary(P2)
-P2
-
-install.packages("MuMIn")
-require(MuMIn)
-options(na.action = "na.fail")
-mod_compl <- lm(D~A+L+P+H1+H2+H3+H4+H5, data=dat)
-dredge(mod_compl, rank="AIC")
+datA1 <- subset(dat, A==1)
+modA1 <- lm(D ~ L+H1+H2+H3+H4+H5, data=datA1)
+summary(modA1)
+datA10 <- subset(dat, A==10)
+modA10 <- lm(D ~ L+H1+H2+H3+H4+H5, data=datA10)
+summary(modA10)
 
 ```
+
+Si se ve por separado por cada a駉 (a駉 1 y a駉 10), las cinco variables de degradaci髇 de h醔itat tienen un efecto significativo sobre la diversidad al閘ica.
 
