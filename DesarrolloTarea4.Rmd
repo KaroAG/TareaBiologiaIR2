@@ -8,7 +8,7 @@ output: html_document
 Exploraci贸n de los datos
 
 ```{r}
-wd<-setwd("C:/Users/JC/Desktop/rep_tarea4/TareaBiologiaIR2")
+wd<-setwd("C:/Users/Karol-PC/Desktop/TareaBiologiaIR2")
 getwd()
 
 dat<-read.csv("TareIR2/Datos_tarea4.csv", stringsAsFactors = T)
@@ -60,6 +60,17 @@ V.p
 ```
 En la trampa 1 hicimos una comparaci贸n m煤ltiple, usando un modelo linear para relacionar los distintos indicadores de degradaci贸n de h谩bitat con la diversidad al茅lica. Seg煤n los reultados, todos los indicadores de degradaci贸n de h谩bitat (H) influyen en la diversidad al茅lica (D) de forma significativa.
 
+### Correcci贸n de Trampa 1
+
+```{r}
+
+dat$L<-as.numeric(dat$L)
+
+CorT1<-lm (D~H1+H2+H3+H4+H5,data=dat)
+summary(CorT1)
+```
+
+Es necesario tomar en cuenta que se quiere ver el efecto de todos los varibles "H" sobre la diversidadd al茅lica (D) de la especie. Entonces querer hacer inferencia sobre como cada una de las variables H afecta D no es correcto, sino lo que se debe hacer es ver como D es afectado por todas las H. 
 
 ## Trampa 2
 
@@ -89,7 +100,9 @@ En la trampa 2 se trabaj贸 como si solo se hubiera tomado una muestra (un ave po
 
 ```{r}
 
-# por a駉s
+# por a?os
+
+dat$L<-as.numeric(dat$L)
 
 datA1 <- subset(dat, A==1)
 modA1 <- lm(D ~ L+H1+H2+H3+H4+H5, data=datA1)
@@ -100,5 +113,5 @@ summary(modA10)
 
 ```
 
-Si se ve por separado por cada a駉 (a駉 1 y a駉 10), las cinco variables de degradaci髇 de h醔itat tienen un efecto significativo sobre la diversidad al閘ica.
+Si se ve por separado por cada a?o (a?o 1 y a?o 10), las cinco variables de degradaci?n de h?bitat tienen un efecto significativo sobre la diversidad al?lica.
 
