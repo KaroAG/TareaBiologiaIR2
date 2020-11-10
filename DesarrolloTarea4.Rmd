@@ -8,7 +8,7 @@ output: html_document
 Exploraci贸n de los datos
 
 ```{r}
-wd<-setwd("C:/Users/JC/Desktop/rep_tarea4/TareaBiologiaIR2")
+wd<-setwd("C:/Users/verov/Documents/UCR/2020/IICiclo/Investigacion_Reproducible/Tarea4/TareaBiologiaIR2")
 getwd()
 
 dat<-read.csv("TareIR2/Datos_tarea4.csv", stringsAsFactors = T)
@@ -74,6 +74,7 @@ datP
 datP1 <- lm (D ~ H1+H2+H3+H4+H5, data = datP )
 summary(datP1)
 
+library("ggplot2")
 ggplot(datP1, aes(D)) + geom_histogram()
 ggplot(dat, aes(D)) + geom_histogram()
 
@@ -89,16 +90,33 @@ En la trampa 2 se trabaj贸 como si solo se hubiera tomado una muestra (un ave po
 
 ```{r}
 
-# por a駉s
-
+# por a?os
+dat$L<-as.numeric(dat$L)
 datA1 <- subset(dat, A==1)
-modA1 <- lm(D ~ L+H1+H2+H3+H4+H5, data=datA1)
+modA1 <- lm(D ~ L+ H1+H2+H3+H4+H5, data=datA1)
 summary(modA1)
 datA10 <- subset(dat, A==10)
-modA10 <- lm(D ~ L+H1+H2+H3+H4+H5, data=datA10)
+modA10 <- lm(D ~ L+ H1+H2+H3+H4+H5, data=datA10)
 summary(modA10)
 
 ```
 
-Si se ve por separado por cada a駉 (a駉 1 y a駉 10), las cinco variables de degradaci髇 de h醔itat tienen un efecto significativo sobre la diversidad al閘ica.
+Si se ve por separado por cada a?o (a?o 1 y a?o 10), las cinco variables de degradaci?n de h?bitat tienen un efecto significativo sobre la diversidad al?lica.
+
+```{r}
+#Correccion Trampa 3
+
+
+modAnos <- lm(D ~ L+A*H1+A*H2+A*H3+A*H4+A*H5, data=dat)
+summary(modAnos)
+
+
+```
+
+Con esta correccion, se puede ver que la relacion significativa que se daba en los subsets de a帽o 1 y a帽o 10 desaparecen cuando se toma en cuanta la interacci贸n de todos los a帽os con las Hs. Tomando en cuenta esta interaccion, solo la relaci贸n entre entre el H4~D, y el H1~D son significativas, esta ultima con una significancia muy baja.
+
+
+
+
+
 
