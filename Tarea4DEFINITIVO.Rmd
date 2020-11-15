@@ -57,3 +57,22 @@ summary(mod2)
 
 Las variables latitud, H3 y H5 no explican a D, mientras que H1, H2 y H4 si tienen un efecto. En este caso se estan analizando los 600 datos de la base.
 
+## Trampa 3
+
+```{r}
+mod4a <- glm(D ~ L + H1, data = dat, family = "poisson")
+summary(mod4a)
+mod4b <- glm(D ~ L + H2, data = dat, family = "poisson")
+summary(mod4b)
+mod4c <- glm(D ~ L + H3, data = dat, family = "poisson")
+summary(mod4c)
+mod4d <- glm(D ~ L + H4, data = dat, family = "poisson")
+summary(mod4d)
+mod4e <- glm(D ~ L + H5, data = dat, family = "poisson")
+summary(mod4e)
+
+```
+
+## Interpretacion Trampa 4
+
+Todas las variables H tienen un efecto sobre la diversidad alelica D, si las evaluamos de manera independiente. 
