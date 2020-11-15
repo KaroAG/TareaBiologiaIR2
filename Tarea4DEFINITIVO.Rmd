@@ -44,6 +44,20 @@ summary(modL2)
 
 La diversidad es afectada por diferentes variables de H(H4 y H5 para latitudes menores o iguales a 0, y de H1 a H4 para latitudes mayores a 0), por lo que la latitud tiene un efecto también en la diversidad alelica.
 
+## Correccion Trampa 1
+
+```{r}
+
+modL <- glm(D ~ L * H1 + L * H2 + L * H3 + L * H4 + L * H5, data = dat, family = "poisson")
+summary(modL)
+
+```
+
+## Interpretacion corregida de la trampa 1
+
+La latitud debe estar incluida en el modelo, pues influye a las variables H y en consecuencia D.
+Con este modelo, se observa que la latitud por si sola no tiene un efecto, y al incluirla sólo las variables H1, H2 y H4 tienen un efecto sobre D.
+
 ## Trampa 2
 
 ```{r}
