@@ -76,3 +76,17 @@ summary(mod4e)
 ## Interpretacion Trampa 4
 
 Todas las variables H tienen un efecto sobre la diversidad alelica D, si las evaluamos de manera independiente. 
+
+## Correccion Trampa 3
+
+```{r}
+
+mod4 <- glm(D ~ L + H1 + H2 + H3 + H4 + H5, data = dat, family = "poisson")
+summary(mod4)
+
+```
+
+## Interpretacion de Trampa 3 corregida
+
+Al hacer un modelo con todas las H se nota que H3 y H5 no afectan a D. Esto se corrige aplicando un modelo incluyendo todas las variables H a la vez. En este caso se observa que solo las variables H1, H2 y H4 tienen un efecto sobre la diversidad alelica.
+
