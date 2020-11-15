@@ -1,0 +1,45 @@
+---
+title: "Tarea4DEFINITIVO"
+author: "Veronica Valverde"
+date: "11/15/2020"
+output: html_document
+---
+
+Exploración de los datos
+
+```{r}
+wd<-setwd("C:/Users/verov/Documents/UCR/2020/IICiclo/Investigacion_Reproducible/Tarea4/TareaBiologiaIR2")
+getwd()
+
+dat <- read.csv(file = "TareIR2/Datos_tarea4.csv", header = T, sep = ",", dec = ".")
+names(dat)
+
+library(psych)
+pairs.panels(dat, 
+             method = "pearson", # correlation method
+             hist.col = "#00AFBB",
+             density = TRUE,  # show density plots
+             ellipses = F # show correlation ellipses
+)
+
+```
+
+
+## Trampa 1
+
+```{r}
+# Trampa 1: categorias de L
+
+datL1 <- subset(dat, L<=0)
+datL2 <- subset(dat, L>0)
+
+modL1 <- glm(D ~ H1 + H2 + H3 + H4 + H5, data = datL1, family = "poisson")
+summary(modL1)
+modL2 <- glm(D ~ H1 + H2 + H3 + H4 + H5, data = datL2, family = "poisson")
+summary(modL2)
+
+```
+
+## Interpretacion de Trampa 1
+
+La diversidad es afectada por diferentes variables de H(H4 y H5 para latitudes menores o iguales a 0, y de H1 a H4 para latitudes mayores a 0), por lo que la latitud tiene un efecto también en la diversidad alelica.
