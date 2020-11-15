@@ -69,7 +69,7 @@ En la trampa 1 hicimos una comparaci√≥n m√∫ltiple, usando un modelo linear para 
 
 
 datP <- aggregate(D~A+L+P+H1+H2+H3+H4+H5,data=dat,FUN=mean)
-datP
+head(datP)
 
 datP1 <- lm (D ~ H1+H2+H3+H4+H5, data = datP )
 summary(datP1)
@@ -84,6 +84,17 @@ plot(dat$D~ dat$H1, col="red") + points(datP$D~datP$H1, col="blue")
 ```
 
 En la trampa 2 se trabaj√≥ como si solo se hubiera tomado una muestra (un ave por latitud), de esta manera disminuyendo el N total a solo 60 en vez de los 600 organismos analizados. Esto para corroborar si era posible tener significancia en nuestros datos a√∫n con pocos organismos testados por regi√≥n. Y efectivamente, se obtuvo que a√∫n con un esfuerzo de muestreo menor, H: la degradaci√≥n del ambiente tiene un efecto sobre la variaci√≥n al√©lica. 
+
+# CorrecciÛn Trampa 2
+
+```{r}
+
+mod2 <- lm (D ~ P*H1+P*H2+P*H3+P*H4+P*H5, data = dat )
+summary(mod2)
+
+```
+
+Se corrigiÛ esta trampa de tamaÒo de muestra pequeÒo tomando la totalidad de los datos pero aÒadiendo la interacciÛn entre las variables H y la poblaciÛn P. En ambos casos la variable H4 tiene un efecto en la diversidad alÈlica D, pero al agregar la interacciÛn y la totalidad de los datos, los efectos de H1 y H5 son diferentes, siendo sÛlo para H5 ligeramente significativo al utilizar un N mayor.
 
 
 ## Trampa 3
