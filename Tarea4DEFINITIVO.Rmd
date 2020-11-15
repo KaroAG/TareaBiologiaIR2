@@ -57,6 +57,22 @@ summary(mod2)
 
 Las variables latitud, H3 y H5 no explican a D, mientras que H1, H2 y H4 si tienen un efecto. En este caso se estan analizando los 600 datos de la base.
 
+## Correccion Trampa 2
+
+```{r}
+datP <- aggregate(D ~ P + L + H1 + H2 + H3 + H4 + H5, data = dat, FUN = mean)
+head(datP)
+
+modP <- glm(D ~ L + H1 + H2 + H3 + H4 + H5, data = datP, family = "poisson")
+summary(modP)
+
+```
+
+
+## Interpretacion de Trampa 2 corregida 
+
+Solo la variable H4 tiene un efecto importante (H1 tiene un efecto pero cuestionable) sobre D, esto al tomar solo un valor de D por poblacion (se tomo el promedio porque no se supo como hacerlo mejor). Indica que cuando se tomaban todos los valores (600) habia una pseudoreplicacion, es decir una Inflacion de N.
+
 ## Trampa 3
 
 ```{r}
