@@ -5,12 +5,9 @@ date: "11/7/2020"
 output: html_document
 ---
 
-Exploración de los datos
+ExploraciÃ³n de los datos
 
 ```{r}
-wd<-setwd("C:/Users/verov/Documents/UCR/2020/IICiclo/Investigacion_Reproducible/Tarea4/TareaBiologiaIR2")
-getwd()
-
 dat<-read.csv("TareIR2/Datos_tarea4.csv", stringsAsFactors = T)
 
 head(dat)
@@ -34,7 +31,7 @@ plot(dat$H5, dat$D)
 
 ```{r}
 
-#COMPARACIONES MÚLTIPLES
+#COMPARACIONES MÃšLTIPLES
 
 dat$D<-as.numeric(dat$D)
 #modelos lineales de cada indicador
@@ -58,14 +55,25 @@ V.p <- append(x = V.p, values = S5$coefficients[2, 4])
 V.p
 
 ```
-En la trampa 1 hicimos una comparación múltiple, usando un modelo linear para relacionar los distintos indicadores de degradación de hábitat con la diversidad alélica. Según los reultados, todos los indicadores de degradación de hábitat (H) influyen en la diversidad alélica (D) de forma significativa.
+En la trampa 1 hicimos una comparaciÃ³n mÃºltiple, usando un modelo linear para relacionar los distintos indicadores de degradaciÃ³n de hÃ¡bitat con la diversidad alÃ©lica. SegÃºn los reultados, todos los indicadores de degradaciÃ³n de hÃ¡bitat (H) influyen en la diversidad alÃ©lica (D) de forma significativa.
 
+### CorrecciÃ³n de Trampa 1
+
+```{r}
+
+dat$L<-as.numeric(dat$L)
+
+CorT1<-lm (D~H1+H2+H3+H4+H5,data=dat)
+summary(CorT1)
+```
+
+Es necesario tomar en cuenta que se quiere ver el efecto de todos los varibles "H" sobre la diversidadd alÃ©lica (D) de la especie. Entonces querer hacer inferencia sobre como cada una de las variables H afecta D no es correcto, sino lo que se debe hacer es ver como D es afectado por todas las H. 
 
 ## Trampa 2
 
 ```{r}
 
-#TAMAÑO DE MUESTRA PEQUEÑO (60N)
+#TAMAÃ‘O DE MUESTRA PEQUEÃ‘O (60N)
 
 
 datP <- aggregate(D~A+L+P+H1+H2+H3+H4+H5,data=dat,FUN=mean)
@@ -83,9 +91,9 @@ plot(dat$D~ dat$H1, col="red") + points(datP$D~datP$H1, col="blue")
 
 ```
 
-En la trampa 2 se trabajó como si solo se hubiera tomado una muestra (un ave por latitud), de esta manera disminuyendo el N total a solo 60 en vez de los 600 organismos analizados. Esto para corroborar si era posible tener significancia en nuestros datos aún con pocos organismos testados por región. Y efectivamente, se obtuvo que aún con un esfuerzo de muestreo menor, H: la degradación del ambiente tiene un efecto sobre la variación alélica. 
+En la trampa 2 se trabajÃ³ como si solo se hubiera tomado una muestra (un ave por latitud), de esta manera disminuyendo el N total a solo 60 en vez de los 600 organismos analizados. Esto para corroborar si era posible tener significancia en nuestros datos aÃºn con pocos organismos testados por regiÃ³n. Y efectivamente, se obtuvo que aÃºn con un esfuerzo de muestreo menor, H: la degradaciÃ³n del ambiente tiene un efecto sobre la variaciÃ³n alÃ©lica. 
 
-# Correcci�n Trampa 2
+# Corrección Trampa 2
 
 ```{r}
 
@@ -94,7 +102,7 @@ summary(mod2)
 
 ```
 
-Se corrigi� esta trampa de tama�o de muestra peque�o tomando la totalidad de los datos pero a�adiendo la interacci�n entre las variables H y la poblaci�n P. En ambos casos la variable H4 tiene un efecto en la diversidad al�lica D, pero al agregar la interacci�n y la totalidad de los datos, los efectos de H1 y H5 son diferentes, siendo s�lo para H5 ligeramente significativo al utilizar un N mayor.
+Se corrigió esta trampa de tamaño de muestra pequeño tomando la totalidad de los datos pero añadiendo la interacción entre las variables H y la población P. En ambos casos la variable H4 tiene un efecto en la diversidad alélica D, pero al agregar la interacción y la totalidad de los datos, los efectos de H1 y H5 son diferentes, siendo sólo para H5 ligeramente significativo al utilizar un N mayor.
 
 
 ## Trampa 3
@@ -102,7 +110,6 @@ Se corrigi� esta trampa de tama�o de muestra peque�o tomando la totalidad de los
 ```{r}
 
 # por a?os
-dat$L<-as.numeric(dat$L)
 datA1 <- subset(dat, A==1)
 modA1 <- lm(D ~ L+ H1+H2+H3+H4+H5, data=datA1)
 summary(modA1)
@@ -113,21 +120,5 @@ summary(modA10)
 ```
 
 Si se ve por separado por cada a?o (a?o 1 y a?o 10), las cinco variables de degradaci?n de h?bitat tienen un efecto significativo sobre la diversidad al?lica.
-
-```{r}
-#Correccion Trampa 3
-
-
-modAnos <- lm(D ~ L+A*H1+A*H2+A*H3+A*H4+A*H5, data=dat)
-summary(modAnos)
-
-
-```
-
-Con esta correccion, se puede ver que la relacion significativa que se daba en los subsets de año 1 y año 10 desaparecen cuando se toma en cuanta la interacción de todos los años con las Hs. Tomando en cuenta esta interaccion, solo la relación entre entre el H4~D, y el H1~D son significativas, esta ultima con una significancia muy baja.
-
-
-
-
 
 
