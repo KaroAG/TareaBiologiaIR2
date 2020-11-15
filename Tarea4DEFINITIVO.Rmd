@@ -1,13 +1,13 @@
 ---
 title: "Tarea4DEFINITIVO"
-author: "Veronica Valverde"
+author: "Veronica Valverde, Karol Aguilar, Juan Carlos Trejos"
 date: "11/15/2020"
 output: html_document
 ---
 
 Exploración de los datos
 
-```{r}
+```{r warning=FALSE}
 wd<-setwd("C:/Users/verov/Documents/UCR/2020/IICiclo/Investigacion_Reproducible/Tarea4/TareaBiologiaIR2")
 getwd()
 
@@ -27,7 +27,7 @@ pairs.panels(dat,
 
 ## Trampa 1
 
-```{r}
+```{r warning=FALSE}
 # Trampa 1: categorias de L
 
 datL1 <- subset(dat, L<=0)
@@ -46,7 +46,7 @@ La diversidad es afectada por diferentes variables de H(H4 y H5 para latitudes m
 
 ## Correccion Trampa 1
 
-```{r}
+```{r warning=FALSE}
 
 modL <- glm(D ~ L * H1 + L * H2 + L * H3 + L * H4 + L * H5, data = dat, family = "poisson")
 summary(modL)
@@ -60,7 +60,7 @@ Con este modelo, se observa que la latitud por si sola no tiene un efecto, y al 
 
 ## Trampa 2
 
-```{r}
+```{r warning=FALSE}
 
 mod2 <- glm(D ~ L + H1 + H2 + H3 + H4 + H5, data = dat, family = "poisson")
 summary(mod2)
@@ -73,7 +73,7 @@ Las variables latitud, H3 y H5 no explican a D, mientras que H1, H2 y H4 si tien
 
 ## Correccion Trampa 2
 
-```{r}
+```{r warning=FALSE}
 datP <- aggregate(D ~ P + L + H1 + H2 + H3 + H4 + H5, data = dat, FUN = mean)
 head(datP)
 
@@ -89,7 +89,7 @@ Solo la variable H4 tiene un efecto importante (H1 tiene un efecto pero cuestion
 
 ## Trampa 3
 
-```{r}
+```{r warning=FALSE}
 mod4a <- glm(D ~ L + H1, data = dat, family = "poisson")
 summary(mod4a)
 mod4b <- glm(D ~ L + H2, data = dat, family = "poisson")
@@ -103,13 +103,13 @@ summary(mod4e)
 
 ```
 
-## Interpretacion Trampa 4
+## Interpretacion Trampa 3
 
 Todas las variables H tienen un efecto sobre la diversidad alelica D, si las evaluamos de manera independiente. 
 
 ## Correccion Trampa 3
 
-```{r}
+```{r warning=FALSE}
 
 mod4 <- glm(D ~ L + H1 + H2 + H3 + H4 + H5, data = dat, family = "poisson")
 summary(mod4)
